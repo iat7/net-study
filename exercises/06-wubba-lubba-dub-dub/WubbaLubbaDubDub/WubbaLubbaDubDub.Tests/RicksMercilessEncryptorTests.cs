@@ -1,5 +1,9 @@
 using System;
 using Xunit;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Collections.Immutable;
 
 namespace WubbaLubbaDubDub.Tests
 {
@@ -14,7 +18,7 @@ namespace WubbaLubbaDubDub.Tests
 
 
         [Theory]
-        [InlineData("petr  feels  lyoubovno  i nprelstivo", new[] { "petr", "feels", "lyoubovno", "i", "prelstivo" })]
+        [InlineData("petr  feels  lyoubovno  i prelstivo", new[] { "petr", "feels", "lyoubovno", "i", "prelstivo" })]
         public void SplitWordsTest(string text, string[] res)
         {
             Assert.Equal(text.SplitToWords(), res);
@@ -83,7 +87,14 @@ namespace WubbaLubbaDubDub.Tests
         {
             Assert.Equal(text.GetUsedObjects(), res);
         }
-        
+
+        [Theory] //недостающий тест с unicode characters
+        [InlineData("abc", "\\u0061\\u0062\\u0063")]
+        public void CharsToCodesTest(string line, string lineOfCodes)
+        {
+             Assert.Equal(line.CharsToCodes(), lineOfCodes);
+        }
+
     }
     
 }
